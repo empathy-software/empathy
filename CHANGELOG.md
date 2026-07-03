@@ -2,6 +2,13 @@
 # Changelog
 
 
+## [4.4.8] - 2026-07-03
+
+### Fixed
+
+- Allow arrays for messages in JSON error objects
+
+
 ## [4.4.7] - 2026-06-24
 
 ### Fixed

@@ -6,7 +6,7 @@ namespace Empathy\MVC\Plugin\JSONView;
 
 class EROb extends ROb
 {
-    public function __construct(int $code, string $message)
+    public function __construct(int $code, mixed $message)
     {
         parent::__construct();
         $this->meta = new \stdClass();
