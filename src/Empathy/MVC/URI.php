@@ -249,6 +249,21 @@ class URI
             $_GET['class'] = $_GET['module'];
         }
 
+        $module = $_GET['module'] ?? $this->defaultModule ?? $this->internal_controller;
+        $class = $_GET['class'] ?? $module;
+
+        // Classic Empathy remap when the direct controller class does not exist.
+        //
+        // /blog/item/21
+        // module => blog
+        // class  => blog
+        // event  => item
+        if ($class !== $module && !class_exists($this->buildControllerName($class))) {
+            $_GET['event'] = $class;
+            $_GET['class'] = $module;
+            $class = $module;
+        }
+
         $this->assertEventIsSet();
 
         $module = $_GET['module'] ?? $this->defaultModule ?? $this->internal_controller;
@@ -266,15 +281,15 @@ class URI
         //
         // /user/login
         // module => user
-        // class  => login
-        // event  => default_event
+        // class  => user
+        // event  => login
         $candidates[] = [
             'module' => $module,
             'class' => $class,
             'event' => $event,
         ];
 
-        // Existing Empathy fallback.
+        // Existing Empathy fallback for routes that still name a distinct controller class.
         //
         // /user/login
         // module => user

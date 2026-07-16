@@ -2,6 +2,20 @@
 # Changelog
 
 
+## [4.4.9] - 2026-07-16
+
+### Changed
+
+- Make `Session` methods no-ops when `Session::up()` has not been called (safe for API controllers with `useSession=false`)
+- Reset internal session-up flag when `Session::down()` destroys the session
+- Add `Session::isUp()` helper
+
+### Fixed
+
+- Guard previously unguarded `Session` methods (`down`, `getNewApp`, `setUISetting`, `getUISetting`, `dump`)
+- Restore classic Empathy URI remap (`/blog/item/21` → module controller + event) when the direct controller class does not exist
+
+
 ## [4.4.8] - 2026-07-03
 
 ### Fixed

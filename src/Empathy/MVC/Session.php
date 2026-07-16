@@ -21,13 +21,19 @@ class Session
 
     private static bool $up = false;
 
+    public static function isUp(): bool
+    {
+        return self::$up;
+    }
+
     public static function dump(): void
     {
-        if (isset($_SESSION)) {
-            echo "<pre>\n";
-            print_r($_SESSION);
-            echo '</pre>';
+        if (self::$up === false || !isset($_SESSION)) {
+            return;
         }
+        echo "<pre>\n";
+        print_r($_SESSION);
+        echo '</pre>';
     }
 
     public static function up(): void
@@ -50,6 +56,10 @@ class Session
 
     public static function getNewApp(): bool
     {
+        if (self::$up === false) {
+            return false;
+        }
+
         $new_app = false;
         if (isset($_SESSION['app'][self::$app]) &&
             count($_SESSION['app'][self::$app]) > 0
@@ -62,25 +72,37 @@ class Session
 
     public static function setUISetting(string $ui, string $setting, mixed $value): void
     {
+        if (self::$up === false) {
+            return;
+        }
         $_SESSION['app'][self::$app][$ui][$setting] = $value;
     }
 
     public static function getUISetting(string $ui, string $setting): mixed
     {
+        if (self::$up === false) {
+            return false;
+        }
+
         return $_SESSION['app'][self::$app][$ui][$setting] ?? false;
     }
 
     public static function down(): void
     {
+        if (self::$up === false) {
+            return;
+        }
+
         $new_app = self::getNewApp();
 
         unset($_SESSION['app'][self::$app]);
-        if (count($_SESSION['app']) === 0) {
+        if (!isset($_SESSION['app']) || count($_SESSION['app']) === 0) {
             Testable::session_unset();
             Testable::session_destroy();
+            self::$up = false;
         }
 
-        if (isset($_SESSION['user_id']) && !$new_app) {
+        if (self::$up && isset($_SESSION['user_id']) && !$new_app) {
             foreach (array_keys($_SESSION) as $index) {
                 if ($index !== 'app') {
                     unset($_SESSION[$index]);
@@ -91,12 +113,15 @@ class Session
 
     public static function set(string $key, mixed $value): void
     {
+        if (self::$up === false) {
+            return;
+        }
         $_SESSION['app'][self::$app][$key] = $value;
     }
 
     public static function get(string $key): mixed
     {
-        if (!isset($_SESSION['app'][self::$app][$key])) {
+        if (self::$up === false || !isset($_SESSION['app'][self::$app][$key])) {
             return false;
         }
 
@@ -105,6 +130,9 @@ class Session
 
     public static function clear(string $key): void
     {
+        if (self::$up === false) {
+            return;
+        }
         unset($_SESSION['app'][self::$app][$key]);
     }
 
@@ -113,6 +141,9 @@ class Session
      */
     public static function loadUIVars(string $ui, array $ui_array): void
     {
+        if (self::$up === false) {
+            return;
+        }
         $new_app = self::getNewApp();
         foreach ($ui_array as $setting) {
             if (isset($_GET[$setting])) {
@@ -131,6 +162,9 @@ class Session
 
     public static function write(): void
     {
+        if (self::$up === false) {
+            return;
+        }
         Testable::session_write_close();
     }
 }

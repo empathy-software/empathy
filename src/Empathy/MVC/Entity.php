@@ -270,7 +270,7 @@ class Entity
             return $value;
         }
 
-        if (\PHP_VERSION_ID >= 80100 && $type instanceof \ReflectionIntersectionType) {
+        if ($type instanceof \ReflectionIntersectionType) {
             return $value;
         }
 
@@ -419,7 +419,7 @@ class Entity
             return true;
         }
         if (is_numeric($value)) {
-            return ((float) $value) != 0.0;
+            return ((float) $value) !== 0.0;
         }
 
         return $value;

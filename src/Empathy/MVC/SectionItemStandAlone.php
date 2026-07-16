@@ -49,7 +49,7 @@ class SectionItemStandAlone extends Entity
         $text = strtolower($text);
 
         // Replace non-alphanumeric characters with hyphen
-        $text = preg_replace('/[^a-z0-9_-]+/', '-', $text);
+        $text = preg_replace('/[^a-z0-9_-]+/', '-', $text) ?? '';
 
         // Trim leading/trailing hyphens
         return trim($text, '-');
