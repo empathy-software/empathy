@@ -2,6 +2,14 @@
 # Changelog
 
 
+## [4.5.1] - 2026-10-10
+
+### Changed
+
+- Version bump. Packagist error.
+
+
+
 ## [4.5.0] - 2026-10-10
 
 ### Added
