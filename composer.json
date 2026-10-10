@@ -36,7 +36,8 @@
     "laravel/pint": "^1.29",
     "phpstan/phpstan": "^2.1",
     "rector/rector": "^2.3",
-    "pestphp/pest": "^4.4"
+    "pestphp/pest": "^4.4",
+    "robmorgan/phinx": "^0.16"
   },
   "autoload": {
     "psr-0": {

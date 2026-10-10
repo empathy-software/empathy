@@ -2,6 +2,13 @@
 # Changelog
 
 
+## [4.5.0] - 2026-10-10
+
+### Added
+
+- Add Phinx as a dev dependency, with `eaa/phinx.php` reading the app `config.yml`
+
+
 ## [4.4.9] - 2026-07-16
 
 ### Changed
