@@ -465,7 +465,7 @@ class Entity
         foreach ($this->properties as $property) {
             $sql .= "$property = ";
 
-            if ($this->$property === '') {
+            if ($this->$property === '' || $this->$property === null) {
                 $sql .= 'NULL';
             } elseif ($this->$property === 'DEFAULT') {
                 $sql .= 'DEFAULT';
@@ -505,7 +505,7 @@ class Entity
             $value = $this->$property;
             $columns[] = $property;
 
-            if ($value === '') {
+            if ($value === '' || $value === null) {
                 $placeholders[] = 'NULL';
             } elseif ($value === 'DEFAULT') {
                 $placeholders[] = 'DEFAULT';

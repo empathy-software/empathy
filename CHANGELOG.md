@@ -2,6 +2,13 @@
 # Changelog
 
 
+## [4.5.3] - 2026-11-20
+
+### Fixed
+
+- Treat PHP `null` property values as SQL `NULL` in `Entity::insert()` and `Entity::save()` (previously only empty strings were written as `NULL`)
+
+
 ## [4.5.1] - 2026-10-10
 
 ### Changed
