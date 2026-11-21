@@ -24,6 +24,22 @@ It can be enabled on modules by adding the following to your
 In this example both the `api` and `api2` modules will be 
 configured to act as RESTful APIs.
 
+By default, listed modules always use JSONView. For modules that still
+serve Smarty HTML to browsers (for example a storefront during a
+gradual React migration), set `require_accept: true` so JSONView only
+activates when the request `Accept` header includes `application/json`
+(or `text/json`):
+
+<pre><code class="lang-yml">plugins:
+  - 
+    name: JSONView
+    version: 1.0
+    config: '[{ "store": { "require_accept": true }, "paypal": { "require_accept": true } }]'
+</code></pre>
+
+API-only modules should omit `require_accept` so existing clients keep
+working without sending an explicit Accept header.
+
 This means that the plugin will be used for the view layer or 
 presentation of your application at the routes (resources) you choose
 within these modules.  From your controller actions

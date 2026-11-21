@@ -127,6 +127,22 @@ class JSONView extends PresentationPlugin implements PreEvent, Presentation
             foreach ($this->config as $value) {
                 if (in_array($module, array_keys($value), true)) {
                     $mod_conf = $value[$module];
+                    if (!is_array($mod_conf)) {
+                        $mod_conf = [];
+                    }
+
+                    // Opt-in: dual HTML/JSON modules can require Accept: application/json
+                    // so browser navigations keep Smarty. Default remains always-on JSON.
+                    if (!empty($mod_conf['require_accept'])) {
+                        $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+                        if (
+                            stripos($accept, 'application/json') === false
+                            && stripos($accept, 'text/json') === false
+                        ) {
+                            continue;
+                        }
+                    }
+
                     $this->error_ob = $mod_conf['error_ob'] ?? \Empathy\MVC\Plugin\JSONView\EROb::class;
                     $this->return_ob = $mod_conf['return_ob'] ?? \Empathy\MVC\Plugin\JSONView\ROb::class;
                     $this->return_codes = $mod_conf['return_codes'] ?? \Empathy\MVC\Plugin\JSONView\ReturnCodes::class;

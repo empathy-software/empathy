@@ -2,6 +2,15 @@
 # Changelog
 
 
+## [4.5.4] - 2026-11-21
+
+### Added
+
+- JSONView module option `require_accept` — when true, activate JSON only if
+  `Accept` includes `application/json` (or `text/json`); default remains
+  always-on JSON for listed modules
+
+
 ## [4.5.3] - 2026-11-20
 
 ### Fixed
